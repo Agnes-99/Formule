@@ -14,8 +14,8 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @OneToOne
+    private Long id;
+    @OneToOne(mappedBy = "address")
     private Customer customer;
     private String street;
     private String city;
@@ -36,7 +36,7 @@ public class Address {
         this.country = builder.country;
     }
 
-    public Integer  getId(){
+    public Long  getId(){
         return id;
     }
 
@@ -78,7 +78,7 @@ public class Address {
     }
 
     public static class  Builder{
-        private Integer id;
+        private Long id;
         private Customer customer;
         private String street;
         private String city;
@@ -86,7 +86,7 @@ public class Address {
         private String postalCode;
         private String country;
 
-        public Builder setId(Integer id){
+        public Builder setId(Long id){
             this.id = id;
             return this;
         }
