@@ -1,9 +1,12 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/address';
+// Local development URL
+const BASE_URL = "http://localhost:8080/formule/address";
+
+// Codespaces URL (when running backend in GitHub Codespaces)
+//const BASE_URL = "https://stunning-guacamole-pqgx46pgqjg394r7-8080.app.github.dev/formule/address";
 
 const addressAPI = {
-
   async create(address) {
     const response = await axios.post(`${BASE_URL}/create`, address);
     return response.data;
@@ -33,4 +36,5 @@ const addressAPI = {
     return response.data;
   },
 };
+
 export default addressAPI;

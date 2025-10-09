@@ -53,10 +53,10 @@ import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore';
 import { storeToRefs } from 'pinia';
 
-import customerAPI from '@/api/users/customerService.js';
+import customerAPI from '@/api/users/CustomerService.js';
 import ProfileHeader from '@/components/users/ProfileHeader.vue';
 import AddressForm from '@/components/generic/AddressForm.vue';
-import addressAPI from '@/api/generic/addressService.js';
+import addressAPI from '@/api/generic/AddressService.js';
 
 const router = useRouter();
 

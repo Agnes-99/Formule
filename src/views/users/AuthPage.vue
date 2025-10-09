@@ -82,7 +82,6 @@
     </div>
   </div>
 </template>
-S
 
 <script setup>
 import { ref, reactive } from 'vue';
@@ -109,19 +108,31 @@ const handleSubmit = async () => {
   submitted.value = false;
   successMessage.value = '';
 
+  console.log("Form submitted:", { ...form, isLogin: isLogin.value });
+
   try {
     if (isLogin.value) {
-      // LOGIN
+      console.log("Attempting login with:", form.emailAddress);
+
       const loggedInUser = await customerAPI.login(form.emailAddress, form.password);
+      console.log("Login response:", loggedInUser);
+
       userStore.setUser(loggedInUser);
       localStorage.setItem('user', JSON.stringify(loggedInUser));
 
       successMessage.value = `Welcome back, ${loggedInUser.firstName}!`;
       submitted.value = true;
-      setTimeout(() => router.push('/'), 1200);
+
+      setTimeout(() => {
+        console.log(" Redirecting to home...");
+        router.push('/');
+      }, 1200);
+
     } else {
-      // REGISTRATION
+      console.log("Attempting registration...");
+
       if (form.password !== form.confirmPassword) {
+        console.warn("Passwords do not match");
         successMessage.value = "Passwords do not match.";
         submitted.value = true;
         return;
@@ -135,30 +146,29 @@ const handleSubmit = async () => {
         password: form.password
       };
 
-      await customerAPI.create(customerData);
+      console.log("Sending registration data:", customerData);
+
+      const response = await customerAPI.create(customerData);
+      console.log("Registration response:", response);
 
       successMessage.value = `Registration successful. Please log in using your email and password.`;
       submitted.value = true;
 
-      // Reset form (optional)
-      form.firstName = '';
-      form.lastName = '';
-      form.phoneNumber = '';
-      form.emailAddress = '';
-      form.password = '';
-      form.confirmPassword = '';
+      // Reset form fields
+      Object.keys(form).forEach(key => form[key] = '');
 
       // Redirect to login
       isLogin.value = true;
+      console.log(" Switched to login tab after registration.");
     }
+
   } catch (error) {
-    console.error("Error:", error.response?.data || error.message);
+    console.error("Error occurred:", error.response?.data || error.message);
     successMessage.value = "An error occurred. Please try again.";
     submitted.value = true;
   }
 };
 </script>
-
 
 <style scoped>
 :root {

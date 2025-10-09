@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import addressAPI from '@/api/generic/addressService.js';
+import addressAPI from '@/api/generic/AddressService.js';
 
 export default {
   name: 'AddressForm',
